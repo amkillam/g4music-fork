@@ -42,7 +42,6 @@ namespace Music {
             _subtitle_two.valign = Gtk.Align.CENTER;
             _subtitle_two.ellipsize = Pango.EllipsizeMode.END;
             _subtitle_two.add_css_class ("caption");
-            _subtitle_two.add_css_class ("dim-label");
             _subtitle_two.margin_top = -18;
 
             _playing.valign = Gtk.Align.CENTER;
