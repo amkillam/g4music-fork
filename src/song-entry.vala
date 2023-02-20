@@ -5,9 +5,11 @@ namespace Music {
         private Gtk.Image _cover = new Gtk.Image ();
         private Gtk.Label _title = new Gtk.Label (null);
         private Gtk.Label _subtitle = new Gtk.Label (null);
+        private Gtk.Label _subtitle_two = new Gtk.Label (null);
         private Gtk.Image _playing = new Gtk.Image ();
         private CoverPaintable _paintable = new CoverPaintable ();
         private Song? _song = null;
+        private Gtk.Box vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 8);
 
         public SongEntry () {
             margin_top = 4;
@@ -18,7 +20,6 @@ namespace Music {
             _paintable.queue_draw.connect (_cover.queue_draw);
             append (_cover);
 
-            var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 8);
             vbox.hexpand = true;
             vbox.margin_start = 16;
             vbox.margin_end = 4;
@@ -36,6 +37,13 @@ namespace Music {
             _subtitle.ellipsize = Pango.EllipsizeMode.END;
             _subtitle.add_css_class ("caption");
             _subtitle.add_css_class ("dim-label");
+
+            _subtitle_two.halign = Gtk.Align.START;
+            _subtitle_two.valign = Gtk.Align.CENTER;
+            _subtitle_two.ellipsize = Pango.EllipsizeMode.END;
+            _subtitle_two.add_css_class ("caption");
+            _subtitle_two.add_css_class ("dim-label");
+            _subtitle_two.margin_top = -18;
 
             _playing.valign = Gtk.Align.CENTER;
             _playing.icon_name = "media-playback-start-symbolic";
@@ -68,22 +76,57 @@ namespace Music {
             _song = song;
             switch (sort) {
                 case SortMode.ALBUM:
+
+                    if (_subtitle_two.label == song.artist){
+                        _subtitle.margin_top = 0;
+                        _subtitle.add_css_class ("dim-label");
+                        vbox.remove (_subtitle_two);
+                        _subtitle_two.label="";
+                    }
                     _title.label = song.album;
                     _subtitle.label = (0 < song.track < int.MAX) ? @"$(song.track). $(song.title)" : song.title;
                     break;
 
                 case SortMode.ARTIST:
+                    if (_subtitle_two.label == song.artist){
+                        _subtitle.margin_top = 0;
+                        _subtitle.add_css_class ("dim-label");
+                        vbox.remove (_subtitle_two);
+                        _subtitle_two.label="";
+                    }
                     _title.label = song.artist;
                     _subtitle.label = song.title;
                     break;
 
+                case SortMode.ALBUMARTIST: 
+
+                    _title.label = song.title;
+                    _subtitle.label =  song.album;
+                    _subtitle.remove_css_class("dim-label");
+                    _subtitle_two.label = song.artist;
+                    vbox.append (_subtitle_two);
+                    _subtitle.margin_top = -6;
+                    break;
+
                 case SortMode.RECENT:
+                if (_subtitle_two.label == song.artist){
+                    _subtitle.margin_top = 0;
+                    _subtitle.add_css_class ("dim-label");
+                    vbox.remove (_subtitle_two);
+                    _subtitle_two.label="";
+                }
                     var date = new DateTime.from_unix_local (song.modified_time);
                     _title.label = song.title;
                     _subtitle.label = date.format ("%x %H:%M");
                     break;
 
                 default:
+                if (_subtitle_two.label == song.artist){
+                    _subtitle.margin_top = 0;
+                    _subtitle.add_css_class ("dim-label");
+                    vbox.remove (_subtitle_two);
+                    _subtitle_two.label="";
+                }
                     _title.label = song.title;
                     _subtitle.label = song.artist;
                     break;

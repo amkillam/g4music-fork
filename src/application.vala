@@ -72,7 +72,8 @@ namespace Music {
                 { ACTION_SORT, sort_by, "u", "1" },
                 { ACTION_SORT, sort_by, "u", "2" },
                 { ACTION_SORT, sort_by, "u", "3" },
-                { ACTION_SORT, sort_by, "u", "4" }
+                { ACTION_SORT, sort_by, "u", "4" },
+                { ACTION_SORT, sort_by, "u", "5" }
             };
             add_action_entries (sort_entries, this);
 
@@ -91,7 +92,7 @@ namespace Music {
             dark_theme = _settings?.get_boolean ("dark-theme") ?? true;
 
             _song_list.model = _song_store.store;
-            _song_store.sort_mode = (SortMode) (_settings?.get_uint ("sort-mode") ?? SortMode.TITLE);
+            _song_store.sort_mode = (SortMode) (_settings?.get_uint ("sort-mode") ?? SortMode.ALBUMARTIST);
 
             _thumbnailer.tag_updated.connect (_song_store.add_to_cache);
             _thumbnailer.remote_thumbnail = _settings?.get_boolean ("remote-thumbnail") ?? false;
@@ -308,7 +309,7 @@ namespace Music {
         }
 
         private void sort_by (SimpleAction action, Variant? parameter) {
-            sort_mode = (SortMode) (parameter?.get_uint32 () ?? 2);
+            sort_mode = (SortMode) (parameter?.get_uint32 () ?? SortMode.ALBUMARTIST);
             _settings?.set_uint ("sort-mode", sort_mode);
             find_current_item ();
         }
@@ -320,8 +321,8 @@ namespace Music {
         }
 
         private void toggle_sort () {
-            if (sort_mode >= SortMode.SHUFFLE)
-                sort_mode = SortMode.ALBUM;
+            if (sort_mode >= SortMode.ALBUM)
+                sort_mode = SortMode.ALBUMARTIST;
             else
                 sort_mode = (SortMode) (sort_mode + 1);
         }

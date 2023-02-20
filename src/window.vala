@@ -190,6 +190,10 @@ namespace Music {
                     case SortMode.SHUFFLE:
                         sort_btn.set_icon_name ("media-playlist-shuffle-symbolic");
                         break;
+                    
+                    case SortMode.ALBUMARTIST:
+                        sort_btn.set_icon_name ("system-users-symbolic");
+                        break;
                     default:
                         sort_btn.set_icon_name ("folder-music-symbolic");
                         break;

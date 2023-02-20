@@ -153,6 +153,16 @@ namespace Music {
             var s2 = (Song) obj2;
             int ret = strcmp (s1._artist_key, s2._artist_key);
             if (ret != 0) return ret;
+            ret = strcmp (s1._title_key, s2._title_key);
+            if (ret != 0) return ret;
+            return strcmp (s1.uri, s2.uri);
+        }
+
+        public static int compare_by_album_artist (Object obj1, Object obj2) {
+            var s1 = (Song) obj1;
+            var s2 = (Song) obj2;
+            int ret = strcmp (s1._artist_key, s2._artist_key);
+            if (ret != 0) return ret;
             ret = strcmp (s1._album_key, s2._album_key);
             if (ret != 0) return ret;
             ret = s1.track - s2.track;

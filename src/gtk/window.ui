@@ -258,6 +258,13 @@
         <attribute name="target" type="u">1</attribute>
       </item>
       <item>
+        <attribute name="icon">media-optical-cd-audio-symbolic</attribute>
+        <attribute name="label" translatable="yes">By Album Artist</attribute>
+        <attribute name="action">app.sort</attribute>
+        <attribute name="target" type="u">5</attribute>
+      </item>
+
+      <item>
         <attribute name="icon">audio-x-generic-symbolic</attribute>
         <attribute name="label" translatable="yes">By Title</attribute>
         <attribute name="action">app.sort</attribute>
